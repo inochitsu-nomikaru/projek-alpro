@@ -5,10 +5,18 @@ using namespace std;
 
 // Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Kamu Paham Apa Yang Kamu Buat
 
+struct dataUang{
+    string nama;
+    int harga;
+    int jumlah;
+    char tipe;
+};
+dataUang data[100];
+
 // Global Ya...
 // nama itu Nama Setiap Menu
 int menu = 0;
-string nama[5] = {"1. Tambah Pendapatan","2. Tambah Pengeluaran","3. Sorting", "4. Hapus Data", "5. Keluar"};
+string nama[6] = {"1. Tambah Pendapatan","2. Tambah Pengeluaran","3. Sorting", "4. Cari Data", "5. Hapus Data", "6. Keluar"};
 static bool ulang = true;
 int jumlah = sizeof(nama) / sizeof(nama[0]);
 
@@ -55,6 +63,28 @@ void menu3 () {
 
 // Menu 4
 void menu4 () {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    system("cls");
+
+    cout << "Masih dalam uji coba ya...\n";
+
+    system("pause");
+    system("cls");
+}
+
+// Menu 5
+void menu5 () {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    system("cls");
+
+    cout << "Masih dalam uji coba ya...\n";
+
+    system("pause");
+    system("cls");
+}
+
+// Menu 6
+void menu6 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
@@ -116,18 +146,12 @@ void input () {
         if (!enterpress) {
             enterpress = true;
             switch (menu) {
-                case 0:
-                menu1();
-                break;
-                case 1:
-                menu2();
-                break;
-                case 2:
-                menu3();
-                break;
-                case 3:
-                menu4();
-                break;
+                case 0: menu1(); break;
+                case 1: menu2(); break;
+                case 2: menu3(); break;
+                case 3: menu4(); break;
+                case 4: menu5(); break;
+                case 5: menu6(); break;
             }
         }
     } else {
@@ -138,14 +162,14 @@ void input () {
 // Logika
 void logic () {
     if (menu < 0) {
-        menu = 3;
-    } else if (menu > 3) {
+        menu = 5;
+    } else if (menu > 5) {
         menu = 0;
     }
 }
 
 // Tampilkan ke Layar
-void render () {
+void renderMenu () {
     ostringstream oss;
     oss << "\033[H";
     oss << "Tekan E atau Enter atau Space untuk konfirmasi                   \n";
@@ -167,7 +191,7 @@ int main () {
     Sleep(16);
     input();
     logic();
-    render();
+    renderMenu();
     }
     return 0;
 }
