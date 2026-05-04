@@ -8,7 +8,7 @@ using namespace std;
 // Global Ya...
 // nama itu Nama Setiap Menu
 int menu = 0;
-string nama[4] = {"1. Tambah Barang","2. Tambah Pembelian","3. Laporan", "4. Keluar"};
+string nama[5] = {"1. Tambah Pendapatan","2. Tambah Pengeluaran","3. Sorting", "4. Hapus Data", "5. Keluar"};
 static bool ulang = true;
 int jumlah = sizeof(nama) / sizeof(nama[0]);
 
