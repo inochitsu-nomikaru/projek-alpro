@@ -1,9 +1,9 @@
-// Template Tugas dan Project
-
 #include <iostream>
 #include <sstream>
 #include <windows.h>
 using namespace std;
+
+// Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Kamu Paham Apa Yang Kamu Buat
 
 // Global Ya...
 // nama itu Nama Setiap Menu
@@ -42,26 +42,50 @@ void menu2 () {
     system("cls");
 }
 
+// Menu 3
+void menu3 () {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    system("cls");
+
+    cout << "Masih dalam uji coba ya...\n";
+
+    system("pause");
+    system("cls");
+}
+
 // Menu 4
 void menu4 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
+    static bool tekan = true;
     bool keluar = true;
     cout << "Yakin pengen keluar? Q untuk keluar, A untuk batal\n" << "Input: ";
+
+    // Input Untuk Keluar
     while (keluar) {
         Sleep(10);
-        if (GetAsyncKeyState('Q')) {
-            keluar = false; ulang = false;
+        if (GetAsyncKeyState('Q') && 0x8000) {
+            if (!tekan) {
+                tekan = true; keluar = false; ulang = false;
+            }
+        } else {
+            tekan = false;
         }
-        if (GetAsyncKeyState('A')){
-            keluar = false;
+        if (GetAsyncKeyState('A') && 0x8000){
+            if (!tekan) {
+                tekan = true; keluar = false;
+            }
+        } else {
+            tekan = false;
         }
     }
 }
 
+// Dibuat Oleh
 // 123250028
 // 123250037
+
 // Input Pengguna
 void input () {
     // Static Biar Gak Lupa Harga Diri
@@ -101,6 +125,9 @@ void input () {
                 case 2:
                 menu3();
                 break;
+                case 3:
+                menu4();
+                break;
             }
         }
     } else {
@@ -111,8 +138,8 @@ void input () {
 // Logika
 void logic () {
     if (menu < 0) {
-        menu = 2;
-    } else if (menu > 2) {
+        menu = 3;
+    } else if (menu > 3) {
         menu = 0;
     }
 }
@@ -131,22 +158,16 @@ void render () {
     cout << oss.str();
 }
 
-// Kode Ini Dibuat Oleh Ino
+// Kode Ini Dibuat Oleh Ino dan Jipeh
 
-// Urusan Main Dibuang Kesini
-// Pake Gameloop Biar Kece di Mata Dosen
-void jalan() {
+// Awoakwoakwaok Ino Pelit Ngasih Main Cuy
+// Pake Gameloop Biar Kece
+int main () {
     while (ulang) {
     Sleep(16);
     input();
     logic();
     render();
     }
-}
-
-// Awoakwoakwaok Ino Pelit Ngasih Main Cuy
-// It's Okay, Kalo Ada Yang Susah Chat Ya...
-int main () {
-    jalan();
     return 0;
 }
