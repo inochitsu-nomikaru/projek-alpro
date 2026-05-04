@@ -9,7 +9,7 @@ struct dataUang{
     string nama;
     int harga;
     int jumlah;
-    char tipe;
+    char tipe; //1 untuk pendapatan, 0 untuk pengeluaran
 };
 dataUang data[100];
 
