@@ -3,7 +3,9 @@
 #include <windows.h>
 using namespace std;
 
-// Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Kamu Paham Apa Yang Kamu Buat
+// Kode Ini Konsepnya Adalah Pendapatan dan Pengeluaran Sederhana
+// Ini Bisa Buat UMKM, Toko, Atau Keuangan Pribadi
+// Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Apa Yang Dibuat Dan Gampang Diubah Sesuai Kebutuhan
 
 struct dataUang{
     string nama;
