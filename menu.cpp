@@ -14,6 +14,7 @@ struct dataUang{
     char tipe; //1 untuk pendapatan, 0 untuk pengeluaran
 };
 dataUang data[100];
+int jumlahData = 0;
 
 // Global Ya...
 // nama itu Nama Setiap Menu
@@ -35,7 +36,16 @@ void menu1 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
-    cout << "Masih dalam uji coba ya...\n";
+    if (jumlahData == 0) {
+        cout << "Data kosong!";
+    } else {
+        cout << "Pendapatan :\n";
+        for (int i = 0; i < jumlahData; i++) {
+            if (data[i].id == 1) {
+                cout << data[i].nama << data[i].harga << data[i].jumlah;
+            }
+        }
+    }
 
     system("pause");
     system("cls");
