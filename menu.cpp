@@ -121,6 +121,7 @@ int menuA = 1;
 // Sub-menu 4
 // Cari Nama
 void carinama() {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
     string namaData;
     cout << "Masukkan nama yang dicari : "; getline(cin, namaData);
@@ -129,9 +130,11 @@ void carinama() {
     cout << "------------------------------------------\n";
     for (int i = 0; i < jumlahData; i++) {
         if (listData[i].nama.find(namaData) != string::npos) {
-            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
-                 << listData[i].nama << " | Rp " << listData[i].harga 
-                 << " | Jml: " << listData[i].jumlah << endl;
+            cout << "Nama   : " << listData[i].nama << endl;
+            cout << "Harga  : Rp " << listData[i].harga << endl;
+            cout << "Jumlah : " << listData[i].jumlah << endl;
+            cout << "Tipe   : " << (listData[i].tipe ? "Pendapatan" : "Pengeluaran") << endl;
+            cout << "------------------------------------------" << endl;
             found = true;
         }
     }
@@ -143,17 +146,20 @@ void carinama() {
 // Sub-menu 4
 // Cari Harga
 void cariharga() {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
     int hargaData;
-    cout << "Masukkan harga yang dicari : "; cin >> hargaData; cin.ignore();
+    cout << "Masukkan harga yang dicari (int) : "; cin >> hargaData; cin.ignore();
 
     bool found = false;
     cout << "------------------------------------------\n";
     for (int i = 0; i < jumlahData; i++) {
         if (listData[i].harga == hargaData) {
-            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
-                 << listData[i].nama << " | Rp " << listData[i].harga 
-                 << " | Jml: " << listData[i].jumlah << endl;
+            cout << "Nama   : " << listData[i].nama << endl;
+            cout << "Harga  : Rp " << listData[i].harga << endl;
+            cout << "Jumlah : " << listData[i].jumlah << endl;
+            cout << "Tipe   : " << (listData[i].tipe ? "Pendapatan" : "Pengeluaran") << endl;
+            cout << "------------------------------------------" << endl;
             found = true;
         }
     }
@@ -165,17 +171,20 @@ void cariharga() {
 // Sub-menu 4
 // Cari Jumlah
 void carijumlah() {
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
     int jmlData;
-    cout << "Masukkan jumlah yang dicari : "; cin >> jmlData; cin.ignore();
+    cout << "Masukkan jumlah yang dicari (int) : "; cin >> jmlData; cin.ignore();
 
     bool found = false;
     cout << "------------------------------------------\n";
     for (int i = 0; i < jumlahData; i++) {
         if (listData[i].jumlah == jmlData) {
-            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
-                 << listData[i].nama << " | Rp " << listData[i].harga 
-                 << " | Jml: " << listData[i].jumlah << endl;
+            cout << "Nama   : " << listData[i].nama << endl;
+            cout << "Harga  : Rp " << listData[i].harga << endl;
+            cout << "Jumlah : " << listData[i].jumlah << endl;
+            cout << "Tipe   : " << (listData[i].tipe ? "Pendapatan" : "Pengeluaran") << endl;
+            cout << "------------------------------------------" << endl;
             found = true;
         }
     }
@@ -209,7 +218,7 @@ void inputMenu4(bool &ulangMenu4) {
         spress = false;
     }
 
-    if ((GetAsyncKeyState('E') && 0x8000) || (GetAsyncKeyState(VK_RETURN) & 0x8000)) {
+    if ((GetAsyncKeyState('E') && 0x8000) || (GetAsyncKeyState(VK_SPACE) && 0x8000)) {
         if (!epress) {
             epress = true;
             if (menuA == 4) {
@@ -242,11 +251,14 @@ void logicMenu4() {
 void renderMenu4() {
     ostringstream oss;
     oss << "\033[H";
-    oss << "Pilih Kriteria Pencarian:                     \n";
-    oss << "1. Nama" << (menuA == 1 ? "   <-- " : "       ") << "\n";
-    oss << "2. Harga" << (menuA == 2 ? "  <-- " : "       ") << "\n";
-    oss << "3. Jumlah" << (menuA == 3 ? " <-- " : "       ") << "\n";
-    oss << "4. Kembali" << (menuA == 4 ? "<-- " : "       ") << "\n";
+    oss << "Pilih mau nyariin apa nih?                     \n";
+    oss << "Tekan E atau Space untuk konfirmasi                   \n";
+    oss << "Tekan W/S untuk memilih                         \n";
+    oss << "Masukkan int di harga dan jumlah. Kalau enggak nanti bug                         \n\n";
+    oss << "1. Nama" << (menuA == 1 ? "   <-- " : "       ") << "                   \n";
+    oss << "2. Harga" << (menuA == 2 ? "  <-- " : "       ") << "                   \n";
+    oss << "3. Jumlah" << (menuA == 3 ? " <-- " : "       ") << "                   \n";
+    oss << "4. Kembali" << (menuA == 4 ? "<-- " : "       ") << "                   \n";
     cout << oss.str();
 }
 
