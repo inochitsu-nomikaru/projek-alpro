@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 #include <windows.h>
 using namespace std;
 
@@ -110,18 +111,181 @@ void menu2 () {
     system("cls");
 }
 
+// sub-menu 3 state
+int menu3A = 1; // menu3A = posisi kursor di halaman 1 (pilih kolom: Nama/Harga/Jumlah)
+int menu3B = 1; // menu3B = posisi kursor di halaman 2 (pilih urutan: Ascending/Descending)
+
+int partition(DataUang arr[], int low, int high, int sortBy, bool ascending) {
+    DataUang pivot = arr[high]; // pivot dari paling kanan
+    int i = low - 1;
+
+    for(int j = low; j < high; j++){
+        bool condition = false;
+
+        // tentukan kondisi perbandingan sesuai kolom yang dipilih
+        if(sortBy == 1){            // by nama
+           condition = ascending ? (arr[j].nama < pivot.nama) : (arr[j].nama > pivot.nama); 
+        } else if(sortBy == 2){     // by harga
+           condition = ascending ? (arr[j].harga < pivot.harga) : (arr[j].harga > pivot.harga);
+        } else if(sortBy == 3){     // by jumlah
+           condition= ascending ? (arr[j].jumlah < pivot.jumlah) : (arr[j].jumlah > pivot.jumlah); 
+        }
+
+        if(condition){
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+// quick sort rekursif
+void quickSort(DataUang arr[], int low, int high, int sortBy, bool ascending){
+    if(low < high){
+        int pi = partition(arr, low, high, sortBy, ascending);  // posisi pivot
+        quickSort(arr, low, pi - 1, sortBy, ascending);         // kiri partisipan
+        quickSort(arr, pi + 1, high, sortBy, ascending);        // kanan partisipan
+    }
+}
+
+// sub-menu 3 input
+// ulangMenu3  = kontrol loop menu, false = keluar ke menu utama
+// ulangMenu3B = penanda halaman: false = halaman 1 (pilih kolom, true halaman 2 (pilih urutan))
+void inputMenu3(bool &ulangMenu3, bool &ulangMenu3B){
+    static bool wpress = false;
+    static bool spress = false;
+    static bool epress = false;
+
+    if(GetAsyncKeyState('W') & 0x8000){
+        if(!wpress){
+            if(ulangMenu3B) menu3B--;
+            else menu3A--;
+            wpress = true;
+        }
+    } else{
+        wpress = false;
+    }
+
+    if(GetAsyncKeyState('S') & 0x8000){
+        if(!spress){
+            if(ulangMenu3B) menu3B++;
+            else menu3A++;
+            spress = true;
+        }
+    } else{
+        spress = false;
+    }
+
+    if((GetAsyncKeyState('E') & 0x8000) || (GetAsyncKeyState(VK_SPACE) & 0x8000)) {
+        if(!epress){
+            epress = true;
+
+            if(ulangMenu3B){
+                if(menu3B == 3){
+                    ulangMenu3B = false;
+                } else {
+                    // milih asc atau desc
+                    bool ascending = (menu3B == 1);     // 1 = asc, 2 = desc
+                    ulangMenu3 = false;                 // keluar loop 3
+                    ulangMenu3B = false;                // reset state halaman
+                    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+                    system("cls");
+                    cout << "YEYY!! Data berhsail disortir!\n";
+                    system("pause");
+                    system("cls");
+                } 
+            } else {
+                // halaman 1 (pilih kolom)
+                if(menu3A == 4){
+                    ulangMenu3 = false;     // pilih "kembali" = menu utama
+                } else {
+                    ulangMenu3B = false;    // pilih kolom = lanjut halaman 2
+                    menu3B = 1;             
+                }
+            }
+        }
+    } else {
+        epress = false;
+    }
+}
+
+//sub-menu 3 
+//logika
+void logicMenu3(bool ulangMenu3B){
+    if(ulangMenu3B) {
+        // halaman 2 ada 3 pilihan (asc, desc, kembali)
+        if(menu3B < 1) menu3B = 3;
+        else if(menu3B > 3) menu3B = 1; 
+    } else {
+        // halaman 1 ada 4 pilihan (nama, harga, jumlah, kembali)
+        if(menu3A < 1) menu3A = 4;
+        else if(menu3A > 4) menu3A = 1;
+    }
+}
+
+//sub-menu 3
+//rendering
+void renderMenu3(bool ulangMenu3B){
+    ostringstream oss;
+    oss << "\033[H";
+    oss << "Quick sort                                     \n";
+    oss << "Tekan E atau Space untuk konfirmasi            \n";
+    oss << "Tekan W/S untuk memilih                        \n\n";
+
+    if(!ulangMenu3B){
+        // halaman 1 - tampilkan pilihan kolom 
+        oss << "Sortir berdasarka apa?\n\n";
+        oss << "1. Nama      " << (menu3A == 1 ? "<-- " : "     ") << "
+        oss << "2. Harga     " << (menu3A == 2 ? "<-- " : "     ") << "
+        oss << "3. Jumlah    " << (menu3A == 3 ? "<-- " : "     ") << "
+        oss << "4. Kembali   " << (menu3A == 4 ? "<-- " : "     ") << "
+    } else {
+        // halaman 2 tampilkan pilihan urutan, dan kolom yang tadi dipilih
+        string kolom = (menu3A == 1) ? "Nama" : (menu3A == 2) ? "Harga" : "Jumlah";
+        oss << "Urutan untuk " << kolom << "?\n\n";
+        oss << "1. Ascending   " << (menu3B == 1 ? "<-- " : "    ") << "
+        oss << "2. Descending  " << (menu3B == 2 ? "<-- " : "    ") << "
+        oss << "3. Kembali     " << (menu3B == 3 ? "<-- " : "    ") << "
+    }
+
+    cout << oss.str();
+}
+
+
 // Menu 3
+//quick sort
 void menu3 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
-    cout << "Masih dalam uji coba ya...\n";
-
+    // kalau data kosong langsung balik, ga masuk ke menu
+    if(jumlahData == 0) {
+    cout << "Data nya kosong weh, ga ada yang bisa disortir!\n";
     system("pause");
     system("cls");
+    return;
+
+    }
+    
+    bool ulangMenu3 = true;     // loop terus selama true
+    bool ulangMenu3B = false;   // mulai dari halaman 1 (pilih kolom)
+    menu3A = 1;                 // reset kursor halaman 1 ke atas
+    menu3B = 1;                 // reset kursor halaman 2 ke atas
+
+    while (ulangMenu3) {
+        sleep(16);
+        inputMenu3(ulangMenu3A, ulangMenu3B);
+        logicMenu3(ulangMenu3B);
+        renderMenu3(ulangMenu3B);
+    }
+
+    system("cls");
+
 }
 
-// Sub-menu 4 state
+//Sub-menu 4 state
 int menuA = 1;
 
 // Sub-menu 4
@@ -450,7 +614,7 @@ void render () {
 
 // Kode Ini Dibuat Oleh Ino dan Jipeh
 
-// Awoakwoakwaok Ino Pelit Ngasih Main Cuy
+
 // Pake Gameloop Biar Kece
 int main () {
     while (ulang) {
