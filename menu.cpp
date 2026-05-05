@@ -69,7 +69,7 @@ void menu2 () {
     cin >> jmlh; cin.ignore();
 
     for (int i = jumlahData; i < (jumlahData + jmlh); i++) {
-        bool ulang = true;
+        bool ulangmenu = true;
         static bool tekan = false;
         cout << "Data ke-" << i+1 << endl;
         cout << "Masukkan nama : "; getline(cin, listData[i].nama);
@@ -77,19 +77,19 @@ void menu2 () {
         cout << "Masukkan jumlah : "; cin >> listData[i].jumlah; cin.ignore();
         cout << "Masukkan tipe (Tekan E Untuk Pendapatan, Tekan Q Untuk Pengeluaran) : ";
         
-        while (ulang) {
+        while (ulangmenu) {
             Sleep(16); // Biar nggak berat di CPU
             if (GetAsyncKeyState('E') & 0x8000) {
                 if (!tekan) {
                     listData[i].tipe = true;
-                    ulang = false;
+                    ulangmenu = false;
                     tekan = true;
                     cout << "Pendapatan\n\n";
                 }
             } else if (GetAsyncKeyState('Q') & 0x8000) {
                 if (!tekan) {
                     listData[i].tipe = false;
-                    ulang = false;
+                    ulangmenu = false;
                     tekan = true;
                     cout << "Pengeluaran\n\n";
                 }
@@ -115,14 +115,158 @@ void menu3 () {
     system("cls");
 }
 
+// Sub-menu 4 state
+int menuA = 1;
+
+// Sub-menu 4
+// Cari Nama
+void carinama() {
+    system("cls");
+    string namaData;
+    cout << "Masukkan nama yang dicari : "; getline(cin, namaData);
+
+    bool found = false;
+    cout << "------------------------------------------\n";
+    for (int i = 0; i < jumlahData; i++) {
+        if (listData[i].nama.find(namaData) != string::npos) {
+            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
+                 << listData[i].nama << " | Rp " << listData[i].harga 
+                 << " | Jml: " << listData[i].jumlah << endl;
+            found = true;
+        }
+    }
+    if (!found) cout << "Data tidak ditemukan!\n";
+    cout << "------------------------------------------\n";
+    system("pause");
+}
+
+// Sub-menu 4
+// Cari Harga
+void cariharga() {
+    system("cls");
+    int hargaData;
+    cout << "Masukkan harga yang dicari : "; cin >> hargaData; cin.ignore();
+
+    bool found = false;
+    cout << "------------------------------------------\n";
+    for (int i = 0; i < jumlahData; i++) {
+        if (listData[i].harga == hargaData) {
+            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
+                 << listData[i].nama << " | Rp " << listData[i].harga 
+                 << " | Jml: " << listData[i].jumlah << endl;
+            found = true;
+        }
+    }
+    if (!found) cout << "Data tidak ditemukan!\n";
+    cout << "------------------------------------------\n";
+    system("pause");
+}
+
+// Sub-menu 4
+// Cari Jumlah
+void carijumlah() {
+    system("cls");
+    int jmlData;
+    cout << "Masukkan jumlah yang dicari : "; cin >> jmlData; cin.ignore();
+
+    bool found = false;
+    cout << "------------------------------------------\n";
+    for (int i = 0; i < jumlahData; i++) {
+        if (listData[i].jumlah == jmlData) {
+            cout << (listData[i].tipe ? "[Pdt] " : "[Pgl] ") 
+                 << listData[i].nama << " | Rp " << listData[i].harga 
+                 << " | Jml: " << listData[i].jumlah << endl;
+            found = true;
+        }
+    }
+    if (!found) cout << "Data tidak ditemukan!\n";
+    cout << "------------------------------------------\n";
+    system("pause");
+}
+
+// Sub-menu 4
+// Input
+void inputMenu4(bool &ulangMenu4) {
+    static bool wpress = false;
+    static bool spress = false;
+    static bool epress = false;
+
+    if (GetAsyncKeyState('W') && 0x8000)  {
+        if (!wpress) {
+            menuA--;
+            wpress = true;
+        }
+    } else {
+        wpress = false;
+    }
+
+    if (GetAsyncKeyState('S') && 0x8000) {
+        if (!spress) {
+            menuA++;
+            spress = true;
+        }
+    } else {
+        spress = false;
+    }
+
+    if ((GetAsyncKeyState('E') && 0x8000) || (GetAsyncKeyState(VK_RETURN) & 0x8000)) {
+        if (!epress) {
+            epress = true;
+            if (menuA == 4) {
+                ulangMenu4 = false;
+            } else {
+                switch (menuA) {
+                    case 1: carinama(); break;
+                    case 2: cariharga(); break;
+                    case 3: carijumlah(); break;
+                }
+            }
+        }
+    } else {
+        epress = false;
+    }
+}
+
+// Sub-menu 4
+// Logika
+void logicMenu4() {
+    if (menuA < 1) {
+        menuA = 4;
+    } else if (menuA > 4) {
+        menuA = 1;
+    }
+}
+
+//Sub-menu 4
+// Rendering
+void renderMenu4() {
+    ostringstream oss;
+    oss << "\033[H";
+    oss << "Pilih Kriteria Pencarian:                     \n";
+    oss << "1. Nama" << (menuA == 1 ? "   <-- " : "       ") << "\n";
+    oss << "2. Harga" << (menuA == 2 ? "  <-- " : "       ") << "\n";
+    oss << "3. Jumlah" << (menuA == 3 ? " <-- " : "       ") << "\n";
+    oss << "4. Kembali" << (menuA == 4 ? "<-- " : "       ") << "\n";
+    cout << oss.str();
+}
+
+
 // Menu 4
+// Cari Data
 void menu4 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
-    cout << "Masih dalam uji coba ya...\n";
+    bool ulangMenu4 = true;
+    menuA = 1;
 
-    system("pause");
+    while (ulangMenu4) {
+        Sleep(16);
+        inputMenu4(ulangMenu4);
+        logicMenu4();
+        renderMenu4();
+    }
+
     system("cls");
 }
 
@@ -223,7 +367,7 @@ void logic () {
 }
 
 // Tampilkan ke Layar
-void renderMenu () {
+void render () {
     ostringstream oss;
     oss << "\033[H";
     oss << "Tekan E atau Enter atau Space untuk konfirmasi                   \n";
@@ -245,7 +389,7 @@ int main () {
     Sleep(16);
     input();
     logic();
-    renderMenu();
+    render();
     }
     return 0;
 }
