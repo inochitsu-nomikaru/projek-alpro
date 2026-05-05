@@ -7,19 +7,19 @@ using namespace std;
 // Ini Bisa Buat UMKM, Toko, Atau Keuangan Pribadi
 // Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Apa Yang Dibuat Dan Gampang Diubah Sesuai Kebutuhan
 
-struct dataUang{
+struct DataUang{
     string nama;
     int harga;
     int jumlah;
-    char tipe; //1 untuk pendapatan, 0 untuk pengeluaran
+    bool tipe; //true untuk pendapatan, false untuk pengeluaran
 };
-dataUang data[100];
+DataUang listData[100];
 int jumlahData = 0;
 
 // Global Ya...
 // nama itu Nama Setiap Menu
 int menu = 0;
-string nama[6] = {"1. Tampil Data","2. Tambah Data","3. Sorting", "4. Cari Data", "5. Hapus Data", "6. Keluar"};
+string nama[6] = {"1. Tampil Data","2. Tambah Data","3. Sorting", "4. Cari Data", "5. Laporan Data", "6. Keluar"};
 static bool ulang = true;
 int jumlah = sizeof(nama) / sizeof(nama[0]);
 
@@ -41,8 +41,14 @@ void menu1 () {
     } else {
         cout << "Pendapatan :\n";
         for (int i = 0; i < jumlahData; i++) {
-            if (data[i].id == 1) {
-                cout << data[i].nama << data[i].harga << data[i].jumlah;
+            if (listData[i].tipe) {
+                cout << listData[i].nama << listData[i].harga << listData[i].jumlah << endl;
+            }
+        }
+        cout << "\n\nPengeluaran: \n";
+        for (int i = 0; i < jumlahData; i++) {
+            if (!listData[i].tipe) {
+                cout << listData[i].nama << listData[i].harga << listData[i].jumlah << endl;
             }
         }
     }
