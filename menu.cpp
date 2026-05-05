@@ -32,6 +32,7 @@ void clearStream () {
 }
 
 // Menu 1
+// Tampil Data
 void menu1 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
@@ -58,11 +59,46 @@ void menu1 () {
 }
 
 // Menu 2
+// Tambah Data
 void menu2 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
     
-    cout << "Masih dalam uji coba ya...\n";
+    int jmlh;
+    cout << "Masukkan Jumlah Data Yang Ingin Kamu Masukin : ";
+    cin >> jmlh; cin.ignore();
+
+    for (int i = jumlahData; i < (jumlahData + jmlh); i++) {
+        bool ulang = true;
+        static bool tekan = false;
+        cout << "Data ke-" << i+1 << endl;
+        cout << "Masukkan nama : "; getline(cin, listData[i].nama);
+        cout << "Masukkan harga : "; cin >> listData[i].harga; cin.ignore();
+        cout << "Masukkan jumlah : "; cin >> listData[i].jumlah; cin.ignore();
+        cout << "Masukkan tipe (Tekan E Untuk Pendapatan, Tekan Q Untuk Pengeluaran) : ";
+        
+        while (ulang) {
+            Sleep(16); // Biar nggak berat di CPU
+            if (GetAsyncKeyState('E') & 0x8000) {
+                if (!tekan) {
+                    listData[i].tipe = true;
+                    ulang = false;
+                    tekan = true;
+                    cout << "Pendapatan\n\n";
+                }
+            } else if (GetAsyncKeyState('Q') & 0x8000) {
+                if (!tekan) {
+                    listData[i].tipe = false;
+                    ulang = false;
+                    tekan = true;
+                    cout << "Pengeluaran\n\n";
+                }
+            } else {
+                tekan = false;
+            }
+        }
+    }
+    jumlahData += jmlh;
 
     system("pause");
     system("cls");
