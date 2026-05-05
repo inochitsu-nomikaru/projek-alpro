@@ -18,7 +18,7 @@ dataUang data[100];
 // Global Ya...
 // nama itu Nama Setiap Menu
 int menu = 0;
-string nama[6] = {"1. Tambah Pendapatan","2. Tambah Pengeluaran","3. Sorting", "4. Cari Data", "5. Hapus Data", "6. Keluar"};
+string nama[6] = {"1. Tampil Data","2. Tambah Data","3. Sorting", "4. Cari Data", "5. Hapus Data", "6. Keluar"};
 static bool ulang = true;
 int jumlah = sizeof(nama) / sizeof(nama[0]);
 
