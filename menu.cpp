@@ -196,11 +196,12 @@ void carijumlah() {
 // Sub-menu 4
 // Input
 void inputMenu4(bool &ulangMenu4) {
+    // Static Biar Gak Lupa Jati Diri
     static bool wpress = false;
     static bool spress = false;
     static bool epress = false;
 
-    if (GetAsyncKeyState('W') && 0x8000)  {
+    if (GetAsyncKeyState('W') & 0x8000)  {
         if (!wpress) {
             menuA--;
             wpress = true;
@@ -209,7 +210,7 @@ void inputMenu4(bool &ulangMenu4) {
         wpress = false;
     }
 
-    if (GetAsyncKeyState('S') && 0x8000) {
+    if (GetAsyncKeyState('S') & 0x8000) {
         if (!spress) {
             menuA++;
             spress = true;
@@ -218,7 +219,7 @@ void inputMenu4(bool &ulangMenu4) {
         spress = false;
     }
 
-    if ((GetAsyncKeyState('E') && 0x8000) || (GetAsyncKeyState(VK_SPACE) && 0x8000)) {
+    if ((GetAsyncKeyState('E') & 0x8000) || (GetAsyncKeyState(VK_SPACE) & 0x8000)) {
         if (!epress) {
             epress = true;
             if (menuA == 4) {
@@ -305,14 +306,14 @@ void menu6 () {
     // Input Untuk Keluar
     while (keluar) {
         Sleep(10);
-        if (GetAsyncKeyState('Q') && 0x8000) {
+        if (GetAsyncKeyState('Q') & 0x8000) {
             if (!tekan) {
                 tekan = true; keluar = false; ulang = false;
             }
         } else {
             tekan = false;
         }
-        if (GetAsyncKeyState('A') && 0x8000){
+        if (GetAsyncKeyState('A') & 0x8000){
             if (!tekan) {
                 tekan = true; keluar = false;
             }
