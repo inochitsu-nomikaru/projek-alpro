@@ -2,6 +2,7 @@
 #include <sstream>
 #include <algorithm>
 #include <windows.h>
+#include <conio.h>
 using namespace std;
 
 // Kode Ini Konsepnya Adalah Pendapatan dan Pengeluaran Sederhana
@@ -39,29 +40,30 @@ void menu1 () {
     system("cls");
 
     if (jumlahData == 0) {
-        cout << "Data kosong!";
+        cout << "Data kosong!\n";
     } else {
         cout << "Pendapatan:\n";
         for (int i = 0; i < jumlahData; i++) {
             if (listData[i].tipe) {
+                cout << "----------\n";
                 cout << "Nama : " << listData[i].nama << endl;
                 cout << "Biaya : " << listData[i].harga << endl;
                 cout << "Jumlah : " << listData[i].jumlah << endl;
-                cout << "----------\n";
             }
         }
         cout << "---------------------\nPengeluaran: \n";
         for (int i = 0; i < jumlahData; i++) {
             if (!listData[i].tipe) {
+                cout << "----------\n";
                 cout << "Nama : " << listData[i].nama << endl;
                 cout << "Biaya : " << listData[i].harga << endl;
                 cout << "Jumlah : " << listData[i].jumlah << endl;
-                cout << "----------\n";
             }
         }
     }
 
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     system("cls");
 }
 
@@ -107,7 +109,8 @@ void menu2 () {
     }
     jumlahData += jmlh;
 
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     system("cls");
 }
 
@@ -188,12 +191,14 @@ void inputMenu3(bool &ulangMenu3, bool &ulangMenu3B){
                 } else {
                     // milih asc atau desc
                     bool ascending = (menu3B == 1);     // 1 = asc, 2 = desc
+                    quickSort(listData, 0, jumlahData - 1, menu3A, ascending);
                     ulangMenu3 = false;                 // keluar loop 3
                     ulangMenu3B = false;                // reset state halaman
                     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
                     system("cls");
                     cout << "YEYY!! Data berhsail disortir!\n";
-                    system("pause");
+                    cout << "Ketik apa aja buat gas...";
+                    _getch();
                     system("cls");
                 } 
             } else {
@@ -201,7 +206,7 @@ void inputMenu3(bool &ulangMenu3, bool &ulangMenu3B){
                 if(menu3A == 4){
                     ulangMenu3 = false;     // pilih "kembali" = menu utama
                 } else {
-                    ulangMenu3B = false;    // pilih kolom = lanjut halaman 2
+                    ulangMenu3B = true;    // pilih kolom = lanjut halaman 2
                     menu3B = 1;             
                 }
             }
@@ -237,17 +242,17 @@ void renderMenu3(bool ulangMenu3B){
     if(!ulangMenu3B){
         // halaman 1 - tampilkan pilihan kolom 
         oss << "Sortir berdasarka apa?\n\n";
-        oss << "1. Nama      " << (menu3A == 1 ? "<-- " : "     ") << "
-        oss << "2. Harga     " << (menu3A == 2 ? "<-- " : "     ") << "
-        oss << "3. Jumlah    " << (menu3A == 3 ? "<-- " : "     ") << "
-        oss << "4. Kembali   " << (menu3A == 4 ? "<-- " : "     ") << "
+        oss << "1. Nama      " << (menu3A == 1 ? "<-- " : "     ") << "\n";
+        oss << "2. Harga     " << (menu3A == 2 ? "<-- " : "     ") << "\n";
+        oss << "3. Jumlah    " << (menu3A == 3 ? "<-- " : "     ") << "\n";
+        oss << "4. Kembali   " << (menu3A == 4 ? "<-- " : "     ") << "\n";
     } else {
         // halaman 2 tampilkan pilihan urutan, dan kolom yang tadi dipilih
         string kolom = (menu3A == 1) ? "Nama" : (menu3A == 2) ? "Harga" : "Jumlah";
         oss << "Urutan untuk " << kolom << "?\n\n";
-        oss << "1. Ascending   " << (menu3B == 1 ? "<-- " : "    ") << "
-        oss << "2. Descending  " << (menu3B == 2 ? "<-- " : "    ") << "
-        oss << "3. Kembali     " << (menu3B == 3 ? "<-- " : "    ") << "
+        oss << "1. Ascending   " << (menu3B == 1 ? "<-- " : "    ") << "\n";
+        oss << "2. Descending  " << (menu3B == 2 ? "<-- " : "    ") << "\n";
+        oss << "3. Kembali     " << (menu3B == 3 ? "<-- " : "    ") << "\n";
     }
 
     cout << oss.str();
@@ -263,8 +268,8 @@ void menu3 () {
     // kalau data kosong langsung balik, ga masuk ke menu
     if(jumlahData == 0) {
     cout << "Data nya kosong weh, ga ada yang bisa disortir!\n";
-    system("pause");
-    system("cls");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     return;
 
     }
@@ -275,12 +280,14 @@ void menu3 () {
     menu3B = 1;                 // reset kursor halaman 2 ke atas
 
     while (ulangMenu3) {
-        sleep(16);
-        inputMenu3(ulangMenu3A, ulangMenu3B);
+        Sleep(16);
+        inputMenu3(ulangMenu3, ulangMenu3B);
         logicMenu3(ulangMenu3B);
         renderMenu3(ulangMenu3B);
     }
 
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     system("cls");
 
 }
@@ -312,7 +319,8 @@ void carinama() {
         cout << "Data tidak ditemukan!\n";
     }
     cout << "------------------------------------------\n";
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
 }
 
 // Sub-menu 4
@@ -339,7 +347,8 @@ void cariharga() {
         cout << "Data tidak ditemukan!\n";
     }
     cout << "------------------------------------------\n";
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
 }
 
 // Sub-menu 4
@@ -366,7 +375,8 @@ void carijumlah() {
         cout << "Data tidak ditemukan!\n";
     }
     cout << "------------------------------------------\n";
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
 }
 
 // Sub-menu 4
@@ -455,13 +465,20 @@ void menu4 () {
     bool ulangMenu4 = true;
     menuA = 1;
 
-    while (ulangMenu4) {
-        Sleep(16);
-        inputMenu4(ulangMenu4);
-        logicMenu4();
-        renderMenu4();
+    if (jumlahData == 0) {
+        ulangMenu4 = false;
+        cout << "Kosong woi datanya, isi dulu lah\n";
+    } else {
+        while (ulangMenu4) {
+            Sleep(16);
+            inputMenu4(ulangMenu4);
+            logicMenu4();
+            renderMenu4();
+        }
     }
 
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     system("cls");
 }
 
@@ -474,30 +491,39 @@ void menu5 () {
     long long totalPendapatan = 0;
     long long totalPengeluaran = 0;
 
-    for (int i = 0; i < jumlahData; i++) {
-        if (listData[i].tipe) {
-            totalPendapatan += (long long)listData[i].harga * listData[i].jumlah;
-        } else {
-            totalPengeluaran += (long long)listData[i].harga * listData[i].jumlah;
-        }
+    if (jumlahData == 0) {
+        cout << "Woi cik, data masih kosong loh ya!";
+    } else {
+        for (int i = 0; i < jumlahData; i++) {
+            if (listData[i].tipe) {
+                totalPendapatan += (long long)listData[i].harga * listData[i].jumlah;
+            } else {
+                totalPengeluaran += (long long)listData[i].harga * listData[i].jumlah;
+            }
+      }
     }
 
     long long labaRugi = totalPendapatan - totalPengeluaran;
 
-    cout << "----------------------\n";
-    cout << "Total Pendapatan  : Rp " << totalPendapatan << endl;
-    cout << "Total Pengeluaran : Rp " << totalPengeluaran << endl;
-    cout << "-----------------------\n";
-    
-    if (labaRugi > 0) {
-        cout << "Hasil: Untung Rp " << labaRugi << endl;
-    } else if (labaRugi < 0) {
-        cout << "Hasil: Rungkat njir Rp " << -labaRugi << endl;
+    if (jumlahData == 0) {
+        cout << " Jangan nyawit mas!\n";
     } else {
-        cout << "Hasil: Yahaha capek doang, Aowaowkaokwaokawk (Rp 0)\n";
+        cout << "----------------------\n";
+        cout << "Total Pendapatan  : Rp " << totalPendapatan << endl;
+        cout << "Total Pengeluaran : Rp " << totalPengeluaran << endl;
+        cout << "-----------------------\n";
+    
+        if (labaRugi > 0) {
+            cout << "Hasil: Untung Rp " << labaRugi << endl;
+        } else if (labaRugi < 0) {
+            cout << "Hasil: Rungkat njir Rp " << -labaRugi << endl;
+        } else {
+            cout << "Hasil: Yahaha capek doang, Aowaowkaokwaokawk (Rp 0)\n";
+        }
     }
 
-    system("pause");
+    cout << "Ketik apa aja buat gas...";
+    _getch();
     system("cls");
 }
 
