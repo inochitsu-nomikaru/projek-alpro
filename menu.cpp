@@ -129,7 +129,7 @@ void carinama() {
     bool found = false;
     cout << "------------------------------------------\n";
     for (int i = 0; i < jumlahData; i++) {
-        if (listData[i].nama.find(namaData) != string::npos) {
+        if (listData[i].nama == namaData) {
             cout << "Nama   : " << listData[i].nama << endl;
             cout << "Harga  : Rp " << listData[i].harga << endl;
             cout << "Jumlah : " << listData[i].jumlah << endl;
@@ -138,7 +138,9 @@ void carinama() {
             found = true;
         }
     }
-    if (!found) cout << "Data tidak ditemukan!\n";
+    if (!found) {
+        cout << "Data tidak ditemukan!\n";
+    }
     cout << "------------------------------------------\n";
     system("pause");
 }
@@ -163,7 +165,9 @@ void cariharga() {
             found = true;
         }
     }
-    if (!found) cout << "Data tidak ditemukan!\n";
+    if (!found){
+        cout << "Data tidak ditemukan!\n";
+    }
     cout << "------------------------------------------\n";
     system("pause");
 }
@@ -188,7 +192,9 @@ void carijumlah() {
             found = true;
         }
     }
-    if (!found) cout << "Data tidak ditemukan!\n";
+    if (!found) {
+        cout << "Data tidak ditemukan!\n";
+    }
     cout << "------------------------------------------\n";
     system("pause");
 }
@@ -226,9 +232,15 @@ void inputMenu4(bool &ulangMenu4) {
                 ulangMenu4 = false;
             } else {
                 switch (menuA) {
-                    case 1: carinama(); break;
-                    case 2: cariharga(); break;
-                    case 3: carijumlah(); break;
+                    case 1: {
+                        carinama(); break;
+                    }
+                    case 2:{
+                        cariharga(); break;
+                    }
+                    case 3: {
+                        carijumlah(); break;
+                    }
                 }
             }
         }
@@ -255,7 +267,7 @@ void renderMenu4() {
     oss << "Pilih mau nyariin apa nih?                     \n";
     oss << "Tekan E atau Space untuk konfirmasi                   \n";
     oss << "Tekan W/S untuk memilih                         \n";
-    oss << "Masukkan int di harga dan jumlah. Kalau enggak nanti bug                         \n\n";
+    oss << "Plis masukin int di harga dan jumlah. Kalau enggak nanti ngebug                         \n\n";
     oss << "1. Nama" << (menuA == 1 ? "   <-- " : "       ") << "                   \n";
     oss << "2. Harga" << (menuA == 2 ? "  <-- " : "       ") << "                   \n";
     oss << "3. Jumlah" << (menuA == 3 ? " <-- " : "       ") << "                   \n";
@@ -357,12 +369,24 @@ void input () {
         if (!enterpress) {
             enterpress = true;
             switch (menu) {
-                case 0: menu1(); break;
-                case 1: menu2(); break;
-                case 2: menu3(); break;
-                case 3: menu4(); break;
-                case 4: menu5(); break;
-                case 5: menu6(); break;
+                case 0:{
+                    menu1(); break;
+                }
+                case 1:  {
+                    menu2(); break;
+                }
+                case 2:{
+                    menu3(); break;
+                }
+                case 3: {
+                    menu4(); break;
+                }
+                case 4:{
+                    menu5(); break;
+                }
+                case 5:  {
+                    menu6(); break;
+                }
             }
         }
     } else {
@@ -406,4 +430,3 @@ int main () {
     }
     return 0;
 }
-//aaaaa
