@@ -40,16 +40,22 @@ void menu1 () {
     if (jumlahData == 0) {
         cout << "Data kosong!";
     } else {
-        cout << "Pendapatan :\n";
+        cout << "Pendapatan:\n";
         for (int i = 0; i < jumlahData; i++) {
             if (listData[i].tipe) {
-                cout << listData[i].nama << listData[i].harga << listData[i].jumlah << endl;
+                cout << "Nama : " << listData[i].nama << endl;
+                cout << "Biaya : " << listData[i].harga << endl;
+                cout << "Jumlah : " << listData[i].jumlah << endl;
+                cout << "----------\n";
             }
         }
-        cout << "\n\nPengeluaran: \n";
+        cout << "---------------------\nPengeluaran: \n";
         for (int i = 0; i < jumlahData; i++) {
             if (!listData[i].tipe) {
-                cout << listData[i].nama << listData[i].harga << listData[i].jumlah << endl;
+                cout << "Nama : " << listData[i].nama << endl;
+                cout << "Biaya : " << listData[i].harga << endl;
+                cout << "Jumlah : " << listData[i].jumlah << endl;
+                cout << "----------\n";
             }
         }
     }
@@ -267,7 +273,7 @@ void renderMenu4() {
     oss << "Pilih mau nyariin apa nih?                     \n";
     oss << "Tekan E atau Space untuk konfirmasi                   \n";
     oss << "Tekan W/S untuk memilih                         \n";
-    oss << "Plis masukin int di harga dan jumlah. Kalau enggak nanti ngebug                         \n\n";
+    oss << "Plis masukin int di harga dan jumlah. Kalau enggak nanti ngebug asli                         \n\n";
     oss << "1. Nama" << (menuA == 1 ? "   <-- " : "       ") << "                   \n";
     oss << "2. Harga" << (menuA == 2 ? "  <-- " : "       ") << "                   \n";
     oss << "3. Jumlah" << (menuA == 3 ? " <-- " : "       ") << "                   \n";
@@ -296,11 +302,36 @@ void menu4 () {
 }
 
 // Menu 5
+// Laporan Data
 void menu5 () {
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     system("cls");
 
-    cout << "Masih dalam uji coba ya...\n";
+    long long totalPendapatan = 0;
+    long long totalPengeluaran = 0;
+
+    for (int i = 0; i < jumlahData; i++) {
+        if (listData[i].tipe) {
+            totalPendapatan += (long long)listData[i].harga * listData[i].jumlah;
+        } else {
+            totalPengeluaran += (long long)listData[i].harga * listData[i].jumlah;
+        }
+    }
+
+    long long labaRugi = totalPendapatan - totalPengeluaran;
+
+    cout << "----------------------\n";
+    cout << "Total Pendapatan  : Rp " << totalPendapatan << endl;
+    cout << "Total Pengeluaran : Rp " << totalPengeluaran << endl;
+    cout << "-----------------------\n";
+    
+    if (labaRugi > 0) {
+        cout << "Hasil: Untung Rp " << labaRugi << endl;
+    } else if (labaRugi < 0) {
+        cout << "Hasil: Rungkat njir Rp " << -labaRugi << endl;
+    } else {
+        cout << "Hasil: Yahaha capek doang, Aowaowkaokwaokawk (Rp 0)\n";
+    }
 
     system("pause");
     system("cls");
