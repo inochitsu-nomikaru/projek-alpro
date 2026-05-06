@@ -82,7 +82,7 @@ void menu2 () {
         static bool tekan = false;
         cout << "Data ke-" << i+1 << endl;
         cout << "Masukkan nama : "; getline(cin, listData[i].nama);
-        cout << "Masukkan harga : "; cin >> listData[i].harga; cin.ignore();
+        cout << "Masukkan biaya : "; cin >> listData[i].harga; cin.ignore();
         cout << "Masukkan jumlah : "; cin >> listData[i].jumlah; cin.ignore();
         cout << "Masukkan tipe (Tekan E Untuk Pendapatan, Tekan Q Untuk Pengeluaran) : ";
         
