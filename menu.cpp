@@ -51,7 +51,7 @@ void menu1 () {
                 cout << "Jumlah : " << listData[i].jumlah << endl;
             }
         }
-        cout << "---------------------\nPengeluaran: \n";
+        cout << "\n===========================\n\tPengeluaran\n===========================\n";
         for (int i = 0; i < jumlahData; i++) {
             if (!listData[i].tipe) {
                 cout << "----------\n";
@@ -253,6 +253,7 @@ void renderMenu3(bool ulangMenu3B){
         oss << "1. Ascending   " << (menu3B == 1 ? "<-- " : "    ") << "\n";
         oss << "2. Descending  " << (menu3B == 2 ? "<-- " : "    ") << "\n";
         oss << "3. Kembali     " << (menu3B == 3 ? "<-- " : "    ") << "\n";
+        oss << "                      ";
     }
 
     cout << oss.str();
