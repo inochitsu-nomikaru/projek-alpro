@@ -8,6 +8,7 @@ using namespace std;
 // Kode Ini Konsepnya Adalah Pendapatan dan Pengeluaran Sederhana
 // Ini Bisa Buat UMKM, Toko, Atau Keuangan Pribadi
 // Wajib Menambahkan Komentar Di Setiap Kode Biar Tau Kalo Apa Yang Dibuat Dan Gampang Diubah Sesuai Kebutuhan
+// apus aja komen ini
 
 struct DataUang{
     string nama;
@@ -81,9 +82,9 @@ void menu2 () {
         bool ulangmenu = true;
         static bool tekan = false;
         cout << "Data ke-" << i+1 << endl;
-        cout << "Masukkan nama : "; getline(cin, listData[i].nama);
-        cout << "Masukkan biaya : "; cin >> listData[i].harga; cin.ignore();
-        cout << "Masukkan jumlah : "; cin >> listData[i].jumlah; cin.ignore();
+        cout << "Masukkan Nama (Pemasukkan / Pengeluaran) : "; getline(cin, listData[i].nama);
+        cout << "Masukkan Nominal / Harga                 : "; cin >> listData[i].harga; cin.ignore();
+        cout << "Masukkan Jumlah                          : "; cin >> listData[i].jumlah; cin.ignore();
         cout << "Masukkan tipe (Tekan E Untuk Pendapatan, Tekan Q Untuk Pengeluaran) : ";
         
         while (ulangmenu) {
@@ -196,7 +197,7 @@ void inputMenu3(bool &ulangMenu3, bool &ulangMenu3B){
                     ulangMenu3B = false;                // reset state halaman
                     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
                     system("cls");
-                    cout << "YEYY!! Data berhsail disortir!\n";
+                    cout << "YEYY!! Data berhasil disortir!\n";
                     cout << "Ketik apa aja buat gas...";
                     _getch();
                     system("cls");
